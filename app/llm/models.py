@@ -1,6 +1,5 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Literal
-
 
 Role = Literal["system", "user", "assistant", "tool"]
 
@@ -25,10 +24,10 @@ class LLMRequest:
 @dataclass(slots=True)
 class LLMResponse:
     content: str
-    
-    raw_response: dict | None = None
 
     model: str
+
+    raw_response: dict | None = None
 
     finish_reason: str | None = None
 

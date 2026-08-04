@@ -32,3 +32,5 @@ pytest
 pytest-asyncio
 
 httpx
+
+pytest

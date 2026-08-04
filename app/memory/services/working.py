@@ -1,6 +1,4 @@
-# app/memory/services/working.py
-
-from app.memory.interfaces import BaseMemoryProvider
+from app.memory.interfaces import BaseWorkingMemoryProvider
 
 
 class WorkingMemoryService:
@@ -10,6 +8,32 @@ class WorkingMemoryService:
 
     def __init__(
         self,
-        provider: BaseMemoryProvider,
-    ):
+        provider: BaseWorkingMemoryProvider,
+    ) -> None:
         self._provider = provider
+
+    async def set(
+        self,
+        key: str,
+        value: str,
+    ) -> None:
+
+        await self._provider.set(
+            key=key,
+            value=value,
+        )
+
+    async def get(
+        self,
+        key: str,
+    ) -> str | None:
+
+        return await self._provider.get(
+            key,
+        )
+
+    async def clear(
+        self,
+    ) -> None:
+
+        await self._provider.clear()

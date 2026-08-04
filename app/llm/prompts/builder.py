@@ -16,17 +16,14 @@ class PromptBuilder:
     ) -> LLMRequest:
 
         messages = [
-
             LLMMessage(
                 role="system",
                 content=SYSTEM_PROMPT,
             ),
-
             LLMMessage(
                 role="user",
                 content=user_input,
-            )
-
+            ),
         ]
 
         return LLMRequest(

@@ -12,9 +12,7 @@ class LLMProviderFactory:
     @staticmethod
     def create() -> BaseLLMProvider:
 
-        client = AsyncClient(
-            host=settings.ollama_host
-        )
+        client = AsyncClient(host=settings.ollama_host)
 
         return OllamaProvider(
             client=client,

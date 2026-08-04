@@ -1,10 +1,7 @@
-from pathlib import Path
-
 from loguru import logger
 
 from app.config.constants import LOG_DIR
 from app.config.settings import settings
-
 
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 

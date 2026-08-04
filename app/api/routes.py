@@ -1,1 +1,1 @@
-GET /health
+GET / health

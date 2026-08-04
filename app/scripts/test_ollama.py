@@ -14,8 +14,7 @@ async def main():
     request = LLMRequest(
         messages=[
             LLMMessage(
-                role="user",
-                content="Hello, introduce yourself in one sentence."
+                role="user", content="Hello, introduce yourself in one sentence."
             )
         ]
     )

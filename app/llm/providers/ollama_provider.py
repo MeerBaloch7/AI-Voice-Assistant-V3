@@ -2,16 +2,12 @@ from time import perf_counter
 
 from ollama import AsyncClient
 
-from app.config.settings import settings
-from app.llm.interfaces import BaseLLMProvider
 from app.llm.models import (
     LLMMessage,
     LLMRequest,
     LLMResponse,
 )
 
-
-from ollama import AsyncClient
 
 class OllamaProvider:
 

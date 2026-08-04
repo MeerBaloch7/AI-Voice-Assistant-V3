@@ -2,7 +2,7 @@
 
 from sqlalchemy import or_, select
 
-from app.database import DatabaseManager
+from app.database.database import DatabaseManager
 from app.memory.interfaces import BasePersistentMemoryProvider
 from app.memory.mappers import MemoryMapper
 from app.memory.models import (
@@ -43,9 +43,7 @@ class SQLiteProvider(BasePersistentMemoryProvider):
                 model = MemoryMapper.to_episode_model(memory)
 
             else:
-                raise ValueError(
-                    f"Unsupported memory type: {memory.memory_type}"
-                )
+                raise ValueError(f"Unsupported memory type: {memory.memory_type}")
 
             session.add(model)
 
@@ -130,9 +128,7 @@ class SQLiteProvider(BasePersistentMemoryProvider):
 
             episodes = session.scalars(
                 select(EpisodicMemoryModel)
-                .where(
-                    EpisodicMemoryModel.content.contains(query)
-                )
+                .where(EpisodicMemoryModel.content.contains(query))
                 .limit(limit)
             ).all()
 
@@ -145,3 +141,59 @@ class SQLiteProvider(BasePersistentMemoryProvider):
                 )
 
         return results
+
+    async def get_user_by_key(
+        self,
+        key: str,
+    ) -> MemoryRecord | None:
+
+        with self._database.session() as session:
+
+            statement = select(UserMemoryModel).where(UserMemoryModel.key == key)
+
+            model = session.scalar(statement)
+
+            if model is None:
+                return None
+
+            return MemoryMapper.to_user_record(model)
+
+    async def upsert_user_preference(
+        self,
+        key: str,
+        value: str,
+    ) -> None:
+
+        with self._database.session() as session:
+
+            model = (
+                session.query(UserMemoryModel)
+                .filter(UserMemoryModel.key == key)
+                .first()
+            )
+
+            if model is None:
+
+                model = UserMemoryModel(
+                    key=key,
+                    value=value,
+                )
+
+                session.add(model)
+
+            else:
+
+                model.value = value
+
+    async def delete_user_by_key(
+        self,
+        key: str,
+    ) -> None:
+
+        with self._database.session() as session:
+            statement = select(UserMemoryModel).where(UserMemoryModel.key == key)
+            model = session.scalar(statement)
+
+            if model:
+
+                session.delete(model)

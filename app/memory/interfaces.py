@@ -24,30 +24,45 @@ class BasePersistentMemoryProvider(BaseMemoryProvider):
     async def add(
         self,
         memory: MemoryRecord,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @abstractmethod
     async def get(
         self,
         memory_id: str,
-    ) -> MemoryRecord | None:
-        ...
+    ) -> MemoryRecord | None: ...
 
     @abstractmethod
     async def delete(
         self,
         memory_id: str,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @abstractmethod
     async def search(
         self,
         query: str,
         limit: int = 5,
-    ) -> list[SearchResult]:
-        ...
+    ) -> list[SearchResult]: ...
+
+    @abstractmethod
+    async def get_user_by_key(
+        self,
+        key: str,
+    ) -> MemoryRecord | None: ...
+
+    @abstractmethod
+    async def upsert_user_preference(
+        self,
+        key: str,
+        value: str,
+    ) -> None: ...
+
+    @abstractmethod
+    async def delete_user_by_key(
+        self,
+        key: str,
+    ) -> None: ...
 
 
 class BaseWorkingMemoryProvider(BaseMemoryProvider):
@@ -60,19 +75,16 @@ class BaseWorkingMemoryProvider(BaseMemoryProvider):
         self,
         key: str,
         value: str,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @abstractmethod
     async def get(
         self,
         key: str,
-    ) -> str | None:
-        ...
+    ) -> str | None: ...
 
     @abstractmethod
-    async def clear(self) -> None:
-        ...
+    async def clear(self) -> None: ...
 
 
 class BaseSemanticMemoryProvider(BaseMemoryProvider):
@@ -84,13 +96,11 @@ class BaseSemanticMemoryProvider(BaseMemoryProvider):
     async def add(
         self,
         memory: MemoryRecord,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @abstractmethod
     async def search(
         self,
         query: str,
         limit: int = 5,
-    ) -> list[SearchResult]:
-        ...
+    ) -> list[SearchResult]: ...

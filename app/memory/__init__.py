@@ -1,14 +1,13 @@
+from .interfaces import BaseMemoryProvider
 from .models import (
     MemoryRecord,
     MemoryType,
     SearchResult,
 )
 
-from .interfaces import BaseMemoryProvider
-
 __all__ = [
+    "BaseMemoryProvider",
     "MemoryRecord",
     "MemoryType",
     "SearchResult",
-    "BaseMemoryProvider",
 ]
