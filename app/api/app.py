@@ -1,23 +1,20 @@
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 
-from app.core.lifecycle import ApplicationLifecycle
-
-lifecycle = ApplicationLifecycle()
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await lifecycle.startup()
-    yield
-    await lifecycle.shutdown()
+from app.api.routers import (
+    conversation,
+    health,
+    memory,
+    websocket,
+)
 
 
 app = FastAPI(
-    title="AI Assistant V3",
-    version="3.0.0",
-    lifespan=lifespan,
+    title="AI Voice Assistant",
+    version="1.0.0",
 )
 
-# Register routes
+
+app.include_router(health.router)
+app.include_router(conversation.router)
+app.include_router(memory.router)
+app.include_router(websocket.router)
