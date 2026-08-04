@@ -4,6 +4,11 @@ from app.conversation.context import ContextBuilder
 from app.conversation.manager import ConversationManager
 from app.conversation.state import ConversationState
 
+from app.assistant.manager import AssistantManager
+from app.audio.vad.manager import VoiceActivityManager
+from app.audio.wakeword.manager import WakeWordManager
+from app.audio.stt.manager import SpeechToTextManager
+
 from app.database import DatabaseManager
 
 from app.llm.factory import LLMProviderFactory
@@ -119,6 +124,17 @@ class ServiceContainer:
             state=conversation_state,
             context_builder=context_builder,
         )
+        #================================
+        # Assistant
+        #==========================
+        assistant = AssistantManager(
+            vad=vad_manager,
+            wake_word=wake_word_manager,
+            stt=stt_manager,
+            conversation=conversation_manager,
+        )
+
+    
 
         # ==================================================
         # Register Services
@@ -141,3 +157,5 @@ class ServiceContainer:
         self.register("conversation_state", conversation_state)
         self.register("context_builder", context_builder)
         self.register("conversation", conversation_manager)
+
+        self.register("assistant",assistant,)

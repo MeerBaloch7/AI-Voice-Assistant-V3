@@ -1,16 +1,20 @@
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
+from pathlib import Path
 
 
 @dataclass(slots=True)
 class AudioChunk:
-    data: bytes
+
+    audio_path: Path
+
     sample_rate: int
+
     channels: int
+
     created_at: datetime = field(
         default_factory=lambda: datetime.now(UTC),
     )
-
 
 @dataclass(slots=True)
 class TranscriptionResult:

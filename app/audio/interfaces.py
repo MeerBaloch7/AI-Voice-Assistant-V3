@@ -27,3 +27,6 @@ class BaseSpeechToTextProvider(ABC):
         self,
         audio: AudioChunk,
     ) -> TranscriptionResult: ...
+
+
+
