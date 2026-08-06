@@ -1,20 +1,21 @@
 import asyncio
 
+from app.llm.factory import LLMProviderFactory
 from app.llm.manager import LLMManager
 from app.llm.models import LLMMessage, LLMRequest
-from app.llm.providers import OllamaProvider
 
 
 async def main():
 
-    provider = OllamaProvider()
+    provider = LLMProviderFactory.create()
 
     manager = LLMManager(provider)
 
     request = LLMRequest(
         messages=[
             LLMMessage(
-                role="user", content="Hello, introduce yourself in one sentence."
+                role="user",
+                content="Hello, introduce yourself in one sentence.",
             )
         ]
     )

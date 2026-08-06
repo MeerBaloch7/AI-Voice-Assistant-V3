@@ -1,5 +1,4 @@
 from app.audio.models import AudioChunk
-from app.audio.stt.manager import SpeechToTextManager
 from app.audio.vad.manager import VoiceActivityManager
 from app.audio.wakeword.manager import WakeWordManager
 from app.conversation.manager import ConversationManager
@@ -16,13 +15,11 @@ class AssistantManager:
         self,
         vad: VoiceActivityManager,
         wake_word: WakeWordManager,
-        stt: SpeechToTextManager,
         conversation: ConversationManager,
     ):
 
         self._vad = vad
         self._wake_word = wake_word
-        self._stt = stt
         self._conversation = conversation
 
     async def process(
@@ -39,12 +36,14 @@ class AssistantManager:
 
         if not wake.detected:
             return None
-
+        # transcription = await self._stt.transcribe(audio)
+        
         reply = await self._conversation.chat(
-            wake.transcription,
+            #transcription.text,
+            wake.transcription
         )
 
         return AssistantResponse(
-            user_text=transcription.text,
+            user_text=wake.transcription,
             assistant_text=reply,
         )

@@ -14,7 +14,7 @@ def create_engine_and_session(
     """
 
     engine = create_engine(
-        database_url or settings.database_url,
+        database_url or settings.sqlite_db,
         echo=False,
         future=True,
     )

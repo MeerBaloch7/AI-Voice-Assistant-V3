@@ -1,3 +1,5 @@
+# app/audio/stt/manager
+
 from app.audio.interfaces import BaseSpeechToTextProvider
 from app.audio.models import (
     AudioChunk,

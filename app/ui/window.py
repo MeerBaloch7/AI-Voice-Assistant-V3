@@ -10,6 +10,10 @@ from app.ui.widgets import (
     StatusWidget,
 )
 
+import asyncio
+
+from app.ui.controller import UIController
+
 
 class MainWindow(QMainWindow):
 
@@ -46,4 +50,21 @@ class MainWindow(QMainWindow):
 
         layout.addWidget(self.status)
         self.input.message_sent.connect(
-            self.chat.add_user_message,)
+            self.on_message,
+        )
+        self.controller = UIController(self)
+    
+    def on_message(
+        self,
+        message: str,
+    ):
+
+        self.chat.add_user_message(
+            message,
+        )
+
+        asyncio.create_task(
+            self.controller.send_message(
+                message,
+            )
+        )

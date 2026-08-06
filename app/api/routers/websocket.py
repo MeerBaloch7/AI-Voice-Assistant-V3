@@ -7,7 +7,7 @@ from fastapi import (
 
 from app.api.dependencies import get_container
 from app.core.container import ServiceContainer
-
+from app.api.websocket_manager import ConnectionManager
 router = APIRouter()
 manager = ConnectionManager()
 

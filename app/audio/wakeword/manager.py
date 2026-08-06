@@ -1,3 +1,4 @@
+# app/audio/wakeword/manager.py
 from app.audio.models import AudioChunk
 
 from .interfaces import BaseWakeWordProvider

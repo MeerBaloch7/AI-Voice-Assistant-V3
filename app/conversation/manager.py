@@ -7,6 +7,7 @@ from app.conversation.models import (
 )
 from app.conversation.state import ConversationState
 from app.llm.manager import LLMManager
+from app.llm.models import LLMRequest
 from app.memory.manager import MemoryManager
 from app.config.constants import DEFAULT_EPISODE_IMPORTANCE
 
@@ -53,7 +54,7 @@ class ConversationManager:
         # ---------------------------------
 
         response = await self._llm.generate(
-            messages,
+            LLMRequest(messages= messages),
         )
 
         # ---------------------------------
@@ -70,7 +71,7 @@ class ConversationManager:
         self._state.add_message(
             ChatMessage(
                 role=Role.ASSISTANT,
-                content=response,
+                content=response.content,
             )
         )
 
@@ -79,8 +80,8 @@ class ConversationManager:
         # ---------------------------------
 
         await self._memory.save_episode(
-            content=(f"User: {user_input}\n" f"Assistant: {response}"),
+            content=(f"User: {user_input}\n" f"Assistant: {response.content}"),
             importance=DEFAULT_EPISODE_IMPORTANCE,
         )
 
-        return response
+        return response.content

@@ -1,3 +1,4 @@
+# audio / vad/manager.py
 from app.audio.models import AudioChunk
 
 from .interfaces import BaseVoiceActivityDetector
