@@ -68,11 +68,16 @@ from app.audio.tts.providers.piper_provider import (
     PiperProvider,
 )
 
+
+from app.audio.player.manager import AudioPlayerManager
+from app.audio.player.providers.sounddevice_player import SoundDevicePlayer
+
 # ============================
 # Assistant
 # ============================
 
 from app.assistant.manager import AssistantManager
+from app.runtime import AssistantRuntime
 
 # ============================
 # Pipeline
@@ -219,6 +224,15 @@ class ServiceContainer:
             provider=tts_provider,
         )
 
+        # === PLAYER =====
+
+        player_provider = SoundDevicePlayer()
+
+        player_manager = AudioPlayerManager(
+            provider=player_provider,
+        )
+
+
         # ==================================================
         # Assistant
         # ==================================================
@@ -237,6 +251,13 @@ class ServiceContainer:
             recorder=recorder_manager,
             assistant=assistant,
             tts=tts_manager,
+            player= player_manager
+        )
+        #==========
+        # Runtime
+        #=========
+        runtime = AssistantRuntime(
+            pipeline=voice_pipeline,
         )
 
         # ==================================================
@@ -270,3 +291,6 @@ class ServiceContainer:
         self.register("assistant", assistant)
 
         self.register("voice_pipeline", voice_pipeline)
+
+        self.register("player", player_manager)
+        self.register("runtime",    runtime,)

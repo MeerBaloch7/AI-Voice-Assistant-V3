@@ -34,3 +34,7 @@ pytest-asyncio
 httpx
 
 pytest
+
+sounddevice
+ 
+soundfile

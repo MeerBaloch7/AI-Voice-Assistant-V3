@@ -1,6 +1,9 @@
+# app/pipeline/voice_pipeline.py
+
 from app.assistant.manager import AssistantManager
 from app.audio.recorder.manager import AudioRecorderManager
 from app.audio.tts.manager import TextToSpeechManager
+from app.audio.player.manager import AudioPlayerManager
 
 
 class VoicePipeline:
@@ -10,10 +13,12 @@ class VoicePipeline:
         recorder: AudioRecorderManager,
         assistant: AssistantManager,
         tts: TextToSpeechManager,
+        player: AudioPlayerManager,
     ):
         self._recorder = recorder
         self._assistant = assistant
         self._tts = tts
+        self._player =player
 
     async def run_once(self):
 
@@ -32,14 +37,6 @@ class VoicePipeline:
             result.assistant_text,
         )
 
-        audio_data, sample_rate = sf.read(
-            str(speech.audio_path),
-            dtype="float32",
+        await self._player.play(
+            speech.audio_path,
         )
-
-        sd.play(
-            audio_data,
-            sample_rate,
-        )
-
-        sd.wait()
