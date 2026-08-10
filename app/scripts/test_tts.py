@@ -1,19 +1,18 @@
 import asyncio
-from pathlib import Path
-import wave
-from app.audio.tts.providers.piper_provider import PiperProvider
-from app.audio.tts.models import SpeechResult
+
+from app.api.dependencies import get_container
 
 
 async def main():
-    provider = PiperProvider(
-        model_path=Path("app/models/tts/en_US-lessac-medium.onnx"),
+    container = get_container()
+
+    tts = container.get("tts")
+
+    result = await tts.speak(
+        "Hello. My name is AIVA. This is a test of my voice system."
     )
 
-    result = await provider.synthesize(
-        "Hello. My name is AIVA. Nice to meet you."
-    )
-
+    print("Generated audio:")
     print(result.audio_path)
 
 

@@ -1,3 +1,5 @@
+# app.audio.vad.interfaces.py 
+
 from abc import ABC, abstractmethod
 
 from app.audio.models import AudioChunk

@@ -1,7 +1,7 @@
 # app/core/container.py
 
 from pathlib import Path
-
+from app.config.settings import settings
 # ============================
 # Database
 # ============================
@@ -183,18 +183,37 @@ class ServiceContainer:
         )
 
         # ==================================================
-        # Audio Providers
+        # Recorder
         # ==================================================
 
-        recorder_provider = MicrophoneRecorder()
+        recorder_provider = MicrophoneRecorder(
+            sample_rate=settings.recorder_sample_rate,
+            channels= settings.recorder_channels,
+            duration= settings.recorder_duration
+        )
+        # ==================================================
+        # STT
+        # ==================================================
 
-        stt_provider = FasterWhisperProvider()
+
+        stt_provider = FasterWhisperProvider(
+            model_name=settings.stt_model,
+            device=settings.stt_device,
+            compute_type=settings.stt_compute_type,
+        )
+        # ==================================================
+        # wake-word
+        # ==================================================
+
 
         vad_provider = SileroVADProvider()
+        # ==================================================
+        # TTS
+        # ==================================================
 
         tts_provider = PiperProvider(
             model_path=Path(
-                "app/models/tts/en_US-lessac-medium.onnx"
+                settings.tts_model_path
             ),
         )
 

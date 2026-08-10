@@ -41,10 +41,32 @@ class Settings(BaseSettings):
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
 
     # -------------------------
-    # Speech
+    # Recorder
     # -------------------------
-    stt_model: str = Field(alias="STT_MODEL")
-    tts_voice: str = Field(alias="TTS_VOICE")
+    recorder_sample_rate: int = Field(default=16000,alias="RECORDER_SAMPLE_RATE",)
+
+    recorder_channels: int = Field(default=1,alias="RECORDER_CHANNELS",)
+
+    recorder_duration: int = Field(default=5.0,alias="RECORDER_DURATION",)
+
+    # -------------------------
+    # Speech-to-Text
+    # -------------------------
+    stt_model: str = Field(default="base",alias="STT_MODEL",)
+
+    stt_device: str = Field(default="cpu",alias="STT_DEVICE",)
+
+    stt_compute_type: str = Field(default="int8",alias="STT_COMPUTE_TYPE",)
+
+    # -------------------------
+    # Wake Word
+    # -------------------------
+    wake_word: str = Field(default="hey aiva",alias="WAKE_WORD",)
+
+    # -------------------------
+    # Text-to-Speech
+    # -------------------------
+    tts_model_path: str = Field(alias="TTS_MODEL_PATH",)
 
     model_config = SettingsConfigDict(
         env_file=".env",

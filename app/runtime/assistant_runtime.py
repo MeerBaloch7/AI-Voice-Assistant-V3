@@ -1,3 +1,5 @@
+#app/runtime/assistant.py
+
 class AssistantRuntime:
     """
     Runs the voice assistant continuously.

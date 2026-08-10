@@ -1,3 +1,5 @@
+# app/audio/wakeword/providers/keyword_providers.py 
+
 from app.audio.models import AudioChunk
 from app.audio.stt.manager import SpeechToTextManager
 
