@@ -39,6 +39,9 @@ from app.conversation.state import ConversationState
 from app.conversation.context import ContextBuilder
 from app.conversation.manager import ConversationManager
 
+from app.assistant.intents.classifier import SimpleIntentClassifier
+
+
 # ============================
 # Audio
 # ============================
@@ -251,6 +254,7 @@ class ServiceContainer:
             provider=player_provider,
         )
 
+        intent_classifier = SimpleIntentClassifier()
 
         # ==================================================
         # Assistant
@@ -260,6 +264,7 @@ class ServiceContainer:
             vad=vad_manager,
             wake_word=wake_word_manager,
             conversation=conversation_manager,
+            intent_classifier=intent_classifier,
         )
 
         # ==================================================

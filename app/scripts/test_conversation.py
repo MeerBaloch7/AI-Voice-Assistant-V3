@@ -9,7 +9,7 @@ async def main():
     conversation = container.get("conversation")
 
     response = await conversation.chat(
-        "Hello AIVA, how are you?"
+        "Hello AIVA, whats is your name?"
     )
 
     print("AIVA:")
